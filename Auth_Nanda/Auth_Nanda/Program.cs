@@ -5,31 +5,7 @@ using System.Text.RegularExpressions;
 namespace Auth_Nanda;
 public class Program
 {
-    static void PrintEvenOdd(int limit, string choice)
-    {
-        if (limit < 1)
-        {
-            Console.WriteLine("Batas harus minimal 1.");
-            return;
-        }
-
-        string result = string.Join(", ",
-            Enumerable.Range(1, limit)
-                .Where(i => (choice == "Genap" && i % 2 == 0) || (choice == "Ganjil" && i % 2 != 0))
-        );
-
-        Console.WriteLine($"Print bilangan 1 - {limit} : {result}");
-    }
-
-    static string EvenOddCheck(int input)
-    {
-        if (input < 1)
-        {
-            return "Invalid Input!!!";
-        }
-
-        return input % 2 == 0 ? "Genap" : "Ganjil";
-    }
+    
 
     static void Main(string[] args)
     {
@@ -140,7 +116,6 @@ public class Program
             }
             else if (choice == 4)
             {
-                // Logika login pengguna
                 Console.Write("Username: ");
                 string lUsername = Console.ReadLine();
                 Console.Write("Password: ");
@@ -179,7 +154,7 @@ public class Program
                                 continue;
                             }
 
-                            string result = EvenOddCheck(num);
+                            string result = GanjilGenap.EvenOddCheck(num);
                             Console.WriteLine(result);
                         }
                         else if (userChoice == 2)
@@ -200,7 +175,7 @@ public class Program
                                 continue;
                             }
 
-                            PrintEvenOdd(limit, choice2);
+                            GanjilGenap.PrintEvenOdd(limit, choice2);
                         }
                         else if (userChoice == 3)
                         {
