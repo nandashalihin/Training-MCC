@@ -9,6 +9,7 @@ namespace Auth_Nanda
 {
     public class UserManager
     {
+        private int currentId = 1;
         static bool IsPasswordValid(string password)
         {
 
@@ -43,9 +44,9 @@ namespace Auth_Nanda
             }
 
             string baseUserName = firstName.Substring(0, 2) + lastName.Substring(0, 2);
-            int Id = 1;
+            int Id = users.Count + 1;
 
-        
+
             string userName = baseUserName;
             while (users.Any(user => user.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase)))
             {
@@ -65,6 +66,7 @@ namespace Auth_Nanda
             users.Add(newUser);
             Console.WriteLine("User berhasil ditambahkan.");
         }
+
 
         public void EditUser(int userId, string newFirstName, string newLastName, string newPassword)
         {
@@ -87,9 +89,9 @@ namespace Auth_Nanda
                 }
 
                 string baseUserName = newFirstName.Substring(0, 2) + newLastName.Substring(0, 2);
-                int Id = 1;
+                int Id = users.Count + 1;
 
-          
+
                 string userName = baseUserName;
                 while (users.Any(user => user.UserName.Equals(userName, StringComparison.OrdinalIgnoreCase) && user.Id != userId))
                 {
