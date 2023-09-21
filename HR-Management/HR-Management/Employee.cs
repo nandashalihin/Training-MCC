@@ -7,12 +7,12 @@ namespace HR_Management
     public class Employee
     {
         public int Id { get; set; }
-        public string first_name { get; set; }
-        public string last_name { get; set; }
-        public string email { get; set; }
-        public string phone_number { get; set; }
+        public string first_name { get; set; } = "";
+        public string last_name { get; set; } = "";
+        public string email { get; set; } = "";
+        public string phone_number { get; set; } = "";
         public DateTime hire_date { get; set; }
-        public decimal salary { get; set; }
+        public int salary { get; set; }
         public decimal? commission_pct { get; set; }
         public int job_id { get; set; }
         public int? manager_id { get; set; }
@@ -55,7 +55,7 @@ namespace HR_Management
                                     email = reader.GetString(3),
                                     phone_number = reader.GetString(4),
                                     hire_date = reader.GetDateTime(5),
-                                    salary = reader.GetDecimal(6),
+                                    salary = reader.GetInt32(6),
                                     commission_pct = reader.IsDBNull(7) ? null : (decimal?)reader.GetDecimal(7),
                                     job_id = reader.GetInt32(8),
                                     manager_id = reader.IsDBNull(9) ? null : (int?)reader.GetInt32(9),

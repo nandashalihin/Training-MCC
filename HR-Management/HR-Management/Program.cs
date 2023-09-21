@@ -1,584 +1,256 @@
 ﻿using HR_Management;
-using System.Data;
+using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
 
-namespace HR_Management;
-
- class Program
+namespace HR_Management
 {
-    string connectionString = Connection.GetConnectionString();
-
-    
-    private static void Main()
+    class Program
     {
-        while (true)
+        string connectionString = Connection.GetConnectionString();
+
+        private static string GetFullName(Employee employee)
         {
-            Console.WriteLine("Menu:");
-            Console.WriteLine("1. Tampilkan semua data Regions");
-            Console.WriteLine("2. Tampilkan semua data Employees");
-            Console.WriteLine("3. Tampilkan semua data Countries");
-            Console.WriteLine("4. Tampilkan semua data Locations");
-            Console.WriteLine("5. Tampilkan semua data Departments");
-            Console.WriteLine("6. Tampilkan semua data Jobs");
-            Console.WriteLine("7. Tampilkan semua data Job Histories");
-            Console.WriteLine("8. Keluar");
+            return $"{employee.first_name} {employee.last_name}";
+        }
 
-            Console.Write("Pilih menu (1-8): ");
-            var choice = Console.ReadLine();
+        private List<Dictionary<string, string>> GetDataAsDictionary()
+        {
+            var employees = new Employee().GetAll();
+            var departments = new Department().GetAll();
+            var locations = new Location().GetAll();
+            var countries = new Country().GetAll();
+            var regions = new Region().GetAll();
 
-            switch (choice)
+            var data = (from employee in employees
+                        join department in departments on employee.department_id equals department.Id
+                        join location in locations on department.LocationId equals location.Id
+                        join country in countries on location.CountryId equals country.Id
+                        join region in regions on country.RegionId equals region.Id
+                        select new Dictionary<string, string>
+                {
+                    { "ID", employee.Id.ToString() },
+                    { "Full Name", GetFullName(employee) },
+                    { "Email", employee.email },
+                    { "Phone", employee.phone_number },
+                    { "Salary", employee.salary.ToString() },
+                    { "Department Name", department.Name },
+                    { "Street Address", location.StreetAddress },
+                    { "Country Name", country.Name },
+                    { "Region Name", region.Name }
+                }).ToList();
+
+            return data;
+        }
+
+
+
+        private void DisplayEmployeeInfo()
+        {
+            var employees = new Employee().GetAll();
+            var employeeData = GetDataAsDictionary();
+            ConsoleHelper.DisplayTable(employeeData);
+        }
+
+        private void DisplayEmployeeCountAndSalaryByDepartment()
+        {
+            var departments = new Department().GetAll();
+            var employees = new Employee().GetAll();
+
+            var departmentStats = from department in departments
+                                  join employee in employees on department.Id equals employee.department_id
+                                  group employee.salary by department.Name into departmentGroup
+                                  select new
+                                  {
+                                      Department_Name = departmentGroup.Key,
+                                      Total_Employee = departmentGroup.Count(),
+                                      Min_Salary = departmentGroup.Min(),
+                                      Max_Salary = departmentGroup.Max(),
+                                      Average_Salary = Convert.ToInt32(departmentGroup.Average())
+                                  };
+
+            var statsData = new List<Dictionary<string, string>>();
+
+            foreach (var result in departmentStats)
             {
-                case "1":
-                    var region = new Region();
+                var row = new Dictionary<string, string>
+                {
+                    { "Department Name", result.Department_Name },
+                    { "Total Employee", result.Total_Employee.ToString() },
+                    { "Min Salary", result.Min_Salary.ToString() },
+                    { "Max Salary", result.Max_Salary.ToString() },
+                    { "Average Salary", result.Average_Salary.ToString() }
+                };
+                statsData.Add(row);
+            }
 
-                    var getAllRegion = region.GetAll();
+            ConsoleHelper.DisplayTable(statsData);
+        }
 
-                    if (getAllRegion.Count > 0)
-                    {
+        private void Run()
+        {
+            while (true)
+            {
+                Console.WriteLine("Menu:");
+                Console.WriteLine("1. Tampilkan semua data Regions");
+                Console.WriteLine("2. Tampilkan semua data Employees");
+                Console.WriteLine("3. Tampilkan semua data Countries");
+                Console.WriteLine("4. Tampilkan semua data Locations");
+                Console.WriteLine("5. Tampilkan semua data Departments");
+                Console.WriteLine("6. Tampilkan semua data Jobs");
+                Console.WriteLine("7. Tampilkan semua data Job Histories");
+                Console.WriteLine("8. Tampilkan data Employee beserta informasi Department, Lokasi, Country, dan Region");
+                Console.WriteLine("9. Tampilkan Jumlah Employee pada Tiap Department dan Statistik Gaji (Min, Max, Avg)");
+                Console.WriteLine("10. Keluar");
+
+                Console.Write("Pilih menu (1-10): ");
+                var choice = Console.ReadLine();
+
+                switch (choice)
+                {
+                    case "1":
+                        var region = new Region();
+                        var getAllRegion = region.GetAll();
+                        var regionData = new List<Dictionary<string, string>>();
+
                         foreach (var region1 in getAllRegion)
                         {
-                            Console.WriteLine($"Id: {region1.Id}, Name: {region1.Name}");
+                            var row = new Dictionary<string, string>
+                            {
+                                { "Id", region1.Id.ToString() },
+                                { "Name", region1.Name }
+                            };
+                            regionData.Add(row);
                         }
-                    }
-                    else
-                    {
-                        Console.WriteLine("No data found");
-                    }
-                    break;
-                case "2":
-                    var employee = new Employee();
 
-                    var getAllEmployees = employee.GetAll();
+                        ConsoleHelper.DisplayTable(regionData);
+                        break;
+                    case "2":
+                        var employee = new Employee();
+                        var getAllEmployees = employee.GetAll();
+                        var employeeData = GetDataAsDictionary();
+                        ConsoleHelper.DisplayTable(employeeData);
+                        break;
+                    case "3":
+                        var country = new Country();
+                        var getAllCountries = country.GetAll();
+                        var countryData = new List<Dictionary<string, string>>();
 
-                    if (getAllEmployees.Count > 0)
-                    {
-                        foreach (var employee1 in getAllEmployees)
-                        {
-                            Console.WriteLine($"Id: {employee1.Id}");
-                            Console.WriteLine($"First Name: {employee1.first_name}");
-                            Console.WriteLine($"Last Name: {employee1.last_name}");
-                            Console.WriteLine($"email: {employee1.email}");
-                            Console.WriteLine($"Phone Number: {employee1.phone_number}");
-                            Console.WriteLine($"Hire Date: {employee1.hire_date.ToString("dd/MM/yyyy")}");
-                            Console.WriteLine($"salary: {employee1.salary}");
-                            Console.WriteLine($"Commission Pct: {employee1.commission_pct}");
-                            Console.WriteLine($"Job ID: {employee1.job_id}");
-                            Console.WriteLine($"Manager ID: {employee1.manager_id}");
-                            Console.WriteLine($"Department ID: {employee1.department_id}");
-                            Console.WriteLine();
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("No data found");
-                    }
-                    break;
-                case "3":
-                    var country = new Country();
-                    var getAllCountries = country.GetAll();
-
-                    if (getAllCountries.Count > 0)
-                    {
-                        Console.WriteLine("Data from tbl_countries:");
                         foreach (var c in getAllCountries)
                         {
-                            Console.WriteLine($"ID: {c.Id}");
-                            Console.WriteLine($"Name: {c.Name}");
-                            Console.WriteLine($"Region ID: {c.RegionId}");
-                            Console.WriteLine();
+                            var row = new Dictionary<string, string>
+                            {
+                                { "ID", c.Id.ToString() },
+                                { "Name", c.Name },
+                                { "Region ID", c.RegionId.ToString() }
+                            };
+                            countryData.Add(row);
                         }
-                    }
-                    else
-                    {
-                        Console.WriteLine("No data found in tbl_countries");
-                    }
 
-                    break;
-                case "4":
-                    var location = new Location();
-                    var getAllLocations = location.GetAll();
+                        ConsoleHelper.DisplayTable(countryData);
+                        break;
+                    case "4":
+                        var location = new Location();
+                        var getAllLocations = location.GetAll();
+                        var locationData = new List<Dictionary<string, string>>();
 
-                    if (getAllLocations.Count > 0)
-                    {
-                        Console.WriteLine("Data from tbl_locations:");
                         foreach (var loc in getAllLocations)
                         {
-                            Console.WriteLine($"ID: {loc.Id}");
-                            Console.WriteLine($"Street Address: {loc.StreetAddress}");
-                            Console.WriteLine($"Postal Code: {loc.Postal}");
-                            Console.WriteLine($"City: {loc.City}");
-                            Console.WriteLine($"State/Province: {loc.StateProvince}");
-                            Console.WriteLine($"Country ID: {loc.CountryId}");
-                            Console.WriteLine();
+                            var row = new Dictionary<string, string>
+                            {
+                                { "ID", loc.Id.ToString() },
+                                { "Street Address", loc.StreetAddress },
+                                { "Postal Code", loc.Postal },
+                                { "City", loc.City },
+                                { "State/Province", loc.StateProvince },
+                                { "Country ID", loc.CountryId.ToString() }
+                            };
+                            locationData.Add(row);
                         }
-                    }
-                    else
-                    {
-                        Console.WriteLine("No data found in tbl_locations");
-                    }
-                    break;
-                case "5":
-                    var department = new Department();
-                    var getAllDepartments = department.GetAll();
 
-                    if (getAllDepartments.Count > 0)
-                    {
-                        Console.WriteLine("Data from tbl_departments:");
+                        ConsoleHelper.DisplayTable(locationData);
+                        break;
+                    case "5":
+                        var department = new Department();
+                        var getAllDepartments = department.GetAll();
+                        var departmentData = new List<Dictionary<string, string>>();
+
                         foreach (var dept in getAllDepartments)
                         {
-                            Console.WriteLine($"ID: {dept.Id}");
-                            Console.WriteLine($"Name: {dept.Name}");
-                            Console.WriteLine($"Location ID: {dept.LocationId}");
-                            Console.WriteLine($"Manager ID: {dept.ManagerId}");
-                            Console.WriteLine();
+                            var row = new Dictionary<string, string>
+                            {
+                                { "ID", dept.Id.ToString() },
+                                { "Name", dept.Name },
+                                { "Location ID", dept.LocationId.ToString() },
+                                { "Manager ID", dept.ManagerId.ToString() }
+                            };
+                            departmentData.Add(row);
                         }
-                    }
-                    else
-                    {
-                        Console.WriteLine("No data found in tbl_departments");
-                    }
 
-                    break;
-                case "6":
-                    var job = new Job();
-                    var getAllJobs = job.GetAll();
+                        ConsoleHelper.DisplayTable(departmentData);
+                        break;
+                    case "6":
+                        var job = new Job();
+                        var getAllJobs = job.GetAll();
+                        var jobData = new List<Dictionary<string, string>>();
 
-                    if (getAllJobs.Count > 0)
-                    {
-                        Console.WriteLine("Data from tbl_jobs:");
                         foreach (var j in getAllJobs)
                         {
-                            Console.WriteLine($"ID: {j.Id}");
-                            Console.WriteLine($"Title: {j.Title}");
-                            Console.WriteLine($"Min Salary: {j.MinSalary}");
-                            Console.WriteLine($"Max Salary: {j.MaxSalary}");
-                            Console.WriteLine();
+                            var row = new Dictionary<string, string>
+                            {
+                                { "ID", j.Id.ToString() },
+                                { "Title", j.Title },
+                                { "Min Salary", j.MinSalary.ToString() },
+                                { "Max Salary", j.MaxSalary.ToString() }
+                            };
+                            jobData.Add(row);
                         }
-                    }
-                    else
-                    {
-                        Console.WriteLine("No data found in tbl_jobs");
-                    }
-                    break;
-                case "7":
-                    var jobHistory = new JobHistory();
-                    var getAllJobHistories = jobHistory.GetAll();
 
-                    if (getAllJobHistories.Count > 0)
-                    {
-                        Console.WriteLine("Data from tbl_job_histories:");
+                        ConsoleHelper.DisplayTable(jobData);
+                        break;
+                    case "7":
+                        var jobHistory = new JobHistory();
+                        var getAllJobHistories = jobHistory.GetAll();
+                        var jobHistoryData = new List<Dictionary<string, string>>();
+
                         foreach (var jh in getAllJobHistories)
                         {
-                            Console.WriteLine($"Employee ID: {jh.EmployeeId}");
-                            Console.WriteLine($"Start Date: {jh.StartDate}");
-                            Console.WriteLine($"End Date: {jh.EndDate}");
-                            Console.WriteLine($"Job ID: {jh.JobId}");
-                            Console.WriteLine($"Department ID: {jh.DepartmentId}");
-                            Console.WriteLine();
+                            var row = new Dictionary<string, string>
+                            {
+                                { "Employee ID", jh.EmployeeId.ToString() },
+                                { "Start Date", jh.StartDate.ToString("dd/MM/yyyy") },
+                                { "End Date", jh.EndDate.ToString("dd/MM/yyyy") },
+                                { "Job ID", jh.JobId.ToString() },
+                                { "Department ID", jh.DepartmentId.ToString() }
+                            };
+                            jobHistoryData.Add(row);
                         }
-                    }
-                    else
-                    {
-                        Console.WriteLine("No data found in tbl_job_histories");
-                    }
-                    break;
-                case "8":
-                    Environment.Exit(0);
-                    break;
-                default:
-                    Console.WriteLine("Pilihan tidak valid.");
-                    break;
-            }
-        } 
-        /*var employee = new Employee();
 
-        var getAllEmployees = employee.GetAll();
-
-        if (getAllEmployees.Count > 0)
-        {
-            foreach (var employee1 in getAllEmployees)
-            {
-                Console.WriteLine($"Id: {employee1.Id}");
-                Console.WriteLine($"First Name: {employee1.first_name}");
-                Console.WriteLine($"Last Name: {employee1.last_name}");
-                Console.WriteLine($"email: {employee1.email}");
-                Console.WriteLine($"Phone Number: {employee1.phone_number}");
-                Console.WriteLine($"Hire Date: {employee1.hire_date}");
-                Console.WriteLine($"salary: {employee1.salary}");
-                Console.WriteLine($"Commission Pct: {employee1.commission_pct}");
-                Console.WriteLine($"Job ID: {employee1.job_id}");
-                Console.WriteLine($"Manager ID: {employee1.manager_id}");
-                Console.WriteLine($"Department ID: {employee1.department_id}");
-                Console.WriteLine();
-            }
-        }
-        else
-        {
-            Console.WriteLine("No data found");
-        }
-*/
-
-        /*var employee = new Employee();
-
-        // Mengambil data karyawan berdasarkan ID yang ingin diubah
-        int employeeIdToUpdate = 11; // ID karyawan yang ingin diubah
-        var employeeToUpdate = employee.GetById(employeeIdToUpdate);
-
-        if (employeeToUpdate != null)
-        {
-            // Menampilkan detail karyawan sebelum pembaruan
-            Console.WriteLine("Employee Details Before Update:");
-            Console.WriteLine($"Id: {employeeToUpdate.Id}");
-            Console.WriteLine($"First Name: {employeeToUpdate.first_name}");
-            Console.WriteLine($"Last Name: {employeeToUpdate.last_name}");
-            Console.WriteLine($"email: {employeeToUpdate.email}");
-            Console.WriteLine($"Phone Number: {employeeToUpdate.phone_number}");
-            Console.WriteLine($"Hire Date: {employeeToUpdate.hire_date}");
-            Console.WriteLine($"salary: {employeeToUpdate.salary}");
-            Console.WriteLine($"Commission Pct: {employeeToUpdate.commission_pct}");
-            Console.WriteLine($"Job ID: {employeeToUpdate.job_id}");
-            Console.WriteLine($"Manager ID: {employeeToUpdate.manager_id}");
-            Console.WriteLine($"Department ID: {employeeToUpdate.department_id}");
-            Console.WriteLine();
-
-            // Melakukan pembaruan (update) pada karyawan
-            employeeToUpdate.first_name = "Najwa;"; // Ganti dengan data baru
-            employeeToUpdate.last_name = "Sahira";   // Ganti dengan data baru
-            employeeToUpdate.phone_number = "08970322873";
-            // Melakukan pembaruan pada karyawan di database
-            string updateResult = employee.Update(employeeToUpdate);
-
-            if (int.TryParse(updateResult, out int result) && result > 0)
-            {
-                Console.WriteLine("Employee Updated Successfully.");
-            }
-            else
-            {
-                Console.WriteLine("Error updating employee.");
-                Console.WriteLine(updateResult);
-            }
-
-            // Menampilkan detail karyawan setelah pembaruan
-            Console.WriteLine("\nEmployee Details After Update:");
-            Console.WriteLine($"Id: {employeeToUpdate.Id}");
-            Console.WriteLine($"First Name: {employeeToUpdate.first_name}");
-            Console.WriteLine($"Last Name: {employeeToUpdate.last_name}");
-            Console.WriteLine($"email: {employeeToUpdate.email}");
-            Console.WriteLine($"Phone Number: {employeeToUpdate.phone_number}");
-            Console.WriteLine($"Hire Date: {employeeToUpdate.hire_date}");
-            Console.WriteLine($"salary: {employeeToUpdate.salary}");
-            Console.WriteLine($"Commission Pct: {employeeToUpdate.commission_pct}");
-            Console.WriteLine($"Job ID: {employeeToUpdate.job_id}");
-            Console.WriteLine($"Manager ID: {employeeToUpdate.manager_id}");
-            Console.WriteLine($"Department ID: {employeeToUpdate.department_id}");
-        }
-        else
-        {
-            Console.WriteLine("Employee not found.");
-        }*/
-
-        /*var employee = new Employee();
-
-        // DELETE: Employee
-        int employeeIdToDelete = 21; // Ganti dengan ID karyawan yang ingin dihapus
-        var deleteResult = employee.Delete(employeeIdToDelete);
-
-        int.TryParse(deleteResult, out int deleteResultInt);
-
-        if (deleteResultInt > 0)
-        {
-            Console.WriteLine("Delete Success");
-        }
-        else
-        {
-            Console.WriteLine("Delete Failed");
-            Console.WriteLine(deleteResult);
-        }*/
-
-        /*var employee = new Employee();
-
-        // INSERT: Employee
-        var newEmployee = new Employee
-        {
-            first_name = "NewFirstName", // Ganti dengan nama baru
-            last_name = "NewLastName",   // Ganti dengan nama baru
-            email = "newemail@example.com",
-            phone_number = "1234567890",
-            hire_date = DateTime.Now,
-            salary = 50000,
-            commission_pct = null, // Ubah sesuai dengan komisi jika ada, atau biarkan null
-            job_id = 1, // Ganti dengan ID pekerjaan yang sesuai
-            manager_id = 1, // Ubah sesuai dengan ID manajer jika ada, atau biarkan null
-            department_id = 1 // Ganti dengan ID departemen yang sesuai
-        };
-
-        var insertResult = employee.Insert(newEmployee);
-
-        int.TryParse(insertResult, out int insertResultInt);
-
-        if (insertResultInt > 0)
-        {
-            Console.WriteLine("Insert Success");
-        }
-        else
-        {
-            Console.WriteLine("Insert Failed");
-            Console.WriteLine(insertResult);
-        }
-*/
-
-
-
-
-
-
-
-
-        //REGION
-
-        /*var region = new Region();
-
-        var getAllRegion = region.GetAll();
-
-        if (getAllRegion.Count > 0)
-        {
-            foreach (var region1 in getAllRegion)
-            {
-                Console.WriteLine($"Id: {region1.Id}, Name: {region1.Name}");
-            }
-        }
-        else
-        {
-            Console.WriteLine("No data found");
-        }*/
-
-        /*var updateResult = region.Update(9,"tes");
-        int.TryParse(updateResult, out int result);
-        if (result > 0)
-        {
-            Console.WriteLine("update Success");
-        }
-        else
-        {
-            Console.WriteLine("update Failed");
-            Console.WriteLine(updateResult);
-        }*/
-
-        /*var deleteResult = region.Delete(6);
-        int.TryParse(deleteResult, out int result);
-        if (result > 0)
-        {
-            Console.WriteLine("Delete Success");
-        }
-        else
-        {
-            Console.WriteLine("Delete Failed");
-            Console.WriteLine(deleteResult);
-        }*/
-
-        /*var insertResult = region.Insert("Region 5");
-        int.TryParse(insertResult, out int result);
-        if (result > 0)
-        {
-            Console.WriteLine("Insert Success");
-        }
-        else
-        {
-            Console.WriteLine("Insert Failed");
-            Console.WriteLine(insertResult);
-        }*/
-    }
-
-    /*// GET ALL: Region
-    public static void GetAllRegions()
-    {
-        using var connection = new SqlConnection(connectionString);
-        using var command = new SqlCommand();
-
-        command.Connection = connection;
-        command.CommandText = "SELECT * FROM tbl_regions";
-
-        try
-        {
-            connection.Open();
-
-            using var reader = command.ExecuteReader();
-
-            if (reader.HasRows)
-                while (reader.Read())
-                {
-                    Console.WriteLine("Id: " + reader.GetInt32(0));
-                    Console.WriteLine("Name: " + reader.GetString(1));
-                }
-            else
-                Console.WriteLine("No rows found.");
-
-            reader.Close();
-            connection.Close();
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error: {ex.Message}");
-        }
-    }
-
-    // GET BY ID: Region
-    public static void GetRegionById(int id) { }
-
-    // INSERT: Region
-    public static void InsertRegion(string name)
-    {
-        using var connection = new SqlConnection(connectionString);
-        using var command = new SqlCommand();
-
-        command.Connection = connection;
-        command.CommandText = "INSERT INTO tbl_regions VALUES (@name);";
-
-        try
-        {
-            var pName = new SqlParameter();
-            pName.ParameterName = "@name";
-            pName.Value = name;
-            pName.SqlDbType = SqlDbType.VarChar;
-            command.Parameters.Add(pName);
-
-            connection.Open();
-            using var transaction = connection.BeginTransaction();
-            try
-            {
-                command.Transaction = transaction;
-
-                var result = command.ExecuteNonQuery();
-
-                transaction.Commit();
-                connection.Close();
-
-                switch (result)
-                {
-                    case >= 1:
-                        Console.WriteLine("Insert Success");
+                        ConsoleHelper.DisplayTable(jobHistoryData);
+                        break;
+                    case "8":
+                        // Tampilkan data Employee beserta informasi Department, Lokasi, Country, dan Region
+                        DisplayEmployeeInfo();
+                        break;
+                    case "9":
+                        // Tampilkan Jumlah Employee pada Tiap Department dan Statistik Gaji (Min, Max, Avg)
+                        DisplayEmployeeCountAndSalaryByDepartment();
+                        break;
+                    case "10":
+                        Environment.Exit(0);
                         break;
                     default:
-                        Console.WriteLine("Insert Failed");
+                        Console.WriteLine("Pilihan tidak valid.");
                         break;
                 }
             }
-            catch (Exception ex)
-            {
-                transaction.Rollback();
-                Console.WriteLine($"Error Transaction: {ex.Message}");
-            }
         }
-        catch (Exception ex)
+
+        static void Main()
         {
-            Console.WriteLine($"Error: {ex.Message}");
+            Program program = new Program();
+            program.Run();
         }
     }
-
-   
-    // UPDATE: Region
-    public static void UpdateRegion(int id, string name)
-    {
-        using var connection = new SqlConnection(connectionString);
-        using var command = new SqlCommand();
-
-        command.Connection = connection;
-        command.CommandText = "UPDATE tbl_regions SET Name = @name WHERE Id = @id;";
-
-        try
-        {
-            var pId = new SqlParameter();
-            pId.ParameterName = "@id";
-            pId.Value = id;
-            pId.SqlDbType = SqlDbType.Int;
-            command.Parameters.Add(pId);
-
-            var pName = new SqlParameter();
-            pName.ParameterName = "@name";
-            pName.Value = name;
-            pName.SqlDbType = SqlDbType.VarChar;
-            command.Parameters.Add(pName);
-
-            connection.Open();
-            using var transaction = connection.BeginTransaction();
-            try
-            {
-                command.Transaction = transaction;
-
-                var result = command.ExecuteNonQuery();
-
-                transaction.Commit();
-                connection.Close();
-
-                if (result > 0)
-                {
-                    Console.WriteLine("Update Success");
-                }
-                else
-                {
-                    Console.WriteLine("Update Failed");
-                }
-            }
-            catch (Exception ex)
-            {
-                transaction.Rollback();
-                Console.WriteLine($"Error Transaction: {ex.Message}");
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error: {ex.Message}");
-        }
-    }
-
-    // DELETE: Region
-    public static void DeleteRegion(int id)
-    {
-        using var connection = new SqlConnection(connectionString);
-        using var command = new SqlCommand();
-
-        command.Connection = connection;
-        command.CommandText = "DELETE FROM tbl_regions WHERE Id = @id;";
-
-        try
-        {
-            var pId = new SqlParameter();
-            pId.ParameterName = "@id";
-            pId.Value = id;
-            pId.SqlDbType = SqlDbType.Int;
-            command.Parameters.Add(pId);
-
-            connection.Open();
-            using var transaction = connection.BeginTransaction();
-            try
-            {
-                command.Transaction = transaction;
-
-                var result = command.ExecuteNonQuery();
-
-                transaction.Commit();
-                connection.Close();
-
-                if (result > 0)
-                {
-                    Console.WriteLine("Delete Success");
-                }
-                else
-                {
-                    Console.WriteLine("Delete Failed");
-                }
-            }
-            catch (Exception ex)
-            {
-                transaction.Rollback();
-                Console.WriteLine($"Error Transaction: {ex.Message}");
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error: {ex.Message}");
-        }
-    }
-
-*/
-} 
+}

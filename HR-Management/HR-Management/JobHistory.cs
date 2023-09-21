@@ -8,7 +8,7 @@ namespace HR_Management
     {
         public int EmployeeId { get; set; }
         public DateTime StartDate { get; set; }
-        public DateTime? EndDate { get; set; }
+        public DateTime EndDate { get; set; } = DateTime.Now;
         public int JobId { get; set; }
         public int DepartmentId { get; set; }
 
@@ -45,7 +45,7 @@ namespace HR_Management
                                 {
                                     EmployeeId = reader.GetInt32(0),
                                     StartDate = reader.GetDateTime(1),
-                                    EndDate = reader.IsDBNull(2) ? null : (DateTime?)reader.GetDateTime(2),
+                                    EndDate = reader.GetDateTime(2),
                                     JobId = reader.GetInt32(3),
                                     DepartmentId = reader.GetInt32(4)
                                 });
