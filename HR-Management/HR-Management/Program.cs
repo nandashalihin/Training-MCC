@@ -1,6 +1,7 @@
 ﻿using HR_Management;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq;
 
@@ -10,6 +11,7 @@ namespace HR_Management
     {
         string connectionString = Connection.GetConnectionString();
 
+        // Membuat FullName
         private static string GetFullName(Employee employee)
         {
             return $"{employee.first_name} {employee.last_name}";
@@ -45,13 +47,24 @@ namespace HR_Management
         }
 
 
-
+        // soal 1
+            /*1. Data employee
+            2. Tambahkan informasi nama department
+            3. Tambahkan informasi lokasi
+            4. Tambahkan informasi country
+            5. Tambahkan informasi region
+            column yang tampil : id, full_name, email, phone, salary, department_name, street_address, country_name, region_name.*/
         private void DisplayEmployeeInfo()
-        {
-            var employees = new Employee().GetAll();
+        { 
             var employeeData = GetDataAsDictionary();
             ConsoleHelper.DisplayTable(employeeData);
         }
+
+        //Soal 2
+            /*1. Jumlah employeee pada tiap department
+            2. gaji terkecil, gaji terbesar, gaji rata rata pada tiap department
+            3. tampilkan data yang hanya jumlah employee lebih dari 3
+            column yang tampil : department_name, total_employee, min_salary, max_salary, average_salary*/
 
         private void DisplayEmployeeCountAndSalaryByDepartment()
         {
