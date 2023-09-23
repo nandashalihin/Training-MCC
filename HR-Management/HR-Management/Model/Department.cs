@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 
-namespace HR_Management
+namespace HR_Management.Models
 {
     public class Department
     {
@@ -11,7 +12,12 @@ namespace HR_Management
         public int LocationId { get; set; }
         public int ManagerId { get; set; }
 
-        private readonly string connectionString = Connection.GetConnectionString();
+        private readonly string connectionString;
+
+        public Department()
+        {
+            connectionString = Connection.GetConnectionString();
+        }
 
         private void InitializeSqlCommand(SqlCommand command, string sql, List<SqlParameter> parameters)
         {
@@ -120,7 +126,9 @@ namespace HR_Management
 
         public string Update(Department department)
         {
-            var sql = "UPDATE tbl_departments SET name = @name, location_id = @location_id, manager_id = @manager_id WHERE Id = @Id;";
+            var sql = "UPDATE tbl_departments SET name = @name, " +
+                      "location_id = @location_id, manager_id = @manager_id " +
+                      "WHERE Id = @Id;";
 
             var parameters = new List<SqlParameter>
             {
