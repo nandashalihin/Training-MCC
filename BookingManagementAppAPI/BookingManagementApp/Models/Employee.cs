@@ -1,18 +1,32 @@
-﻿namespace BookingManagementApp.Models
-{
-    public class Employee
-    {
-        public Guid Guid { get; set; }
-        public char Nik { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public DateTime BirthDate { get; set; }
-        public int Gender { get; set; }
-        public DateTime HiringDate { get; set; }
-        public string Email { get; set; }
-        public string PhoneNumber { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public DateTime ModifiedDate { get; set; }
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
+namespace BookingManagementApp.Models
+{
+    [Table(name: "tb_m_employees")]
+    public class Employee : BaseEntity
+    {
+        [Column(name: "nik")]
+        public char Nik { get; set; }
+
+        [Column(name: "first_name", TypeName = "nvarchar(100)")]
+        public string FirstName { get; set; }
+
+        [Column(name: "last_name", TypeName = "nvarchar(100)")]
+        public string? LastName { get; set; }
+
+        [Column(name: "birth_date")]
+        public DateTime BirthDate { get; set; }
+
+        [Column(name: "gender")]
+        public int Gender { get; set; }
+
+        [Column(name: "hiring_date")]
+        public DateTime HiringDate { get; set; }
+
+        [Column(name: "email", TypeName = "nvarchar(100)")]
+        public string Email { get; set; }
+
+        [Column(name: "phone_number", TypeName = "nvarchar(20)")]
+        public string PhoneNumber { get; set; }
     }
 }

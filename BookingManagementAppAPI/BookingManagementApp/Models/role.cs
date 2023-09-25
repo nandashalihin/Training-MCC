@@ -1,10 +1,11 @@
-﻿namespace BookingManagementApp.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace BookingManagementApp.Models
 {
-    public class role
+    [Table(name: "tb_m_roles")]
+    public class Role : BaseEntity
     {
-        public Guid Guid { get; set; }
+        [Column(name: "role_name", TypeName = "nvarchar100")]
         public string Name { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public DateTime ModifiedDate { get; set; }
     }
 }

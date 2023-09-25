@@ -1,13 +1,20 @@
-﻿namespace BookingManagementApp.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace BookingManagementApp.Models
 {
-    public class Education
+    [Table(name: "tb_m_educations")]
+    public class Education : BaseEntity
     {
-        public Guid Guid { get; set; }
+        [Column(name: "major", TypeName = "nvarchar100")]
         public string Major { get; set; }
+
+        [Column(name: "degree", TypeName = "nvarchar100")]
         public string Degree { get; set; }
+
+        [Column(name: "gpa")]
         public float Gpa { get; set; }
+
+        [Column(name: "university_guid")]
         public Guid UniversityGuid { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public DateTime ModifiedDate { get; set; }
     }
 }

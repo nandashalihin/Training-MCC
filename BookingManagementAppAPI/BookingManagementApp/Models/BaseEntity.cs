@@ -1,0 +1,14 @@
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace BookingManagementApp.Models
+{
+    public class BaseEntity
+    {
+        [Column(name: "guid")]
+        public Guid Guid { get; set; }
+        [Column(name: "created_date")]
+        public DateTime CreatedDate { get; set; }
+        [Column(name: "modified_date")]
+        public DateTime ModifiedDate { get; set; }
+    }
+}
