@@ -22,5 +22,8 @@ namespace BookingManagementApp.Models
 
         [Column(name: "employee_guid")]
         public Guid EmployeeGuid { get; set; }
+
+        public Room? Room { get; set; }
+        public Employee? Employee { get; set; }
     }
 }

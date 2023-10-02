@@ -7,5 +7,7 @@ namespace BookingManagementApp.Models
     {
         [Column(name: "role_name", TypeName = "nvarchar100")]
         public string Name { get; set; }
+
+        public ICollection<AccountRole>? AccountRoles { get; set; }
     }
 }

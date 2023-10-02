@@ -9,6 +9,8 @@ namespace BookingManagementApp.Models
         public string Code { get; set; }
         [Column(name: "Name", TypeName = "nvarchar(100)")]
         public string Name { get; set; }
-        
+
+        public ICollection<Education>? Educations { get; set; }
     }
 }
+

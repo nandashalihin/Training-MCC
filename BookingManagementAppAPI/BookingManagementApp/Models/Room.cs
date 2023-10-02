@@ -13,5 +13,7 @@ namespace BookingManagementApp.Models
 
         [Column(name: "room_capacity")]
         public int Capacity { get; set; }
+
+        public ICollection<Booking>? Bookings { get; set; }
     }
 }
