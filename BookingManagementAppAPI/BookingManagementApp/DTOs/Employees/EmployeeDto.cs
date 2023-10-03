@@ -19,7 +19,7 @@ namespace BookingManagementApp.DTOs
         // DTO untuk Get Employee
         public static implicit operator EmployeeDto(Employee employee)
         {
-            return new EmployeeDto
+            return new()
             {
                 Guid = employee.Guid,
                 Nik = employee.Nik,
@@ -37,7 +37,7 @@ namespace BookingManagementApp.DTOs
         // DTO untuk Update Employee
         public static implicit operator Employee(EmployeeDto employeeDto)
         {
-            return new Employee
+            return new()
             {
                 Guid = employeeDto.Guid,
                 Nik = employeeDto.Nik,
@@ -51,5 +51,6 @@ namespace BookingManagementApp.DTOs
                 ModifiedDate = DateTime.Now
             };
         }
+       
     }
 }

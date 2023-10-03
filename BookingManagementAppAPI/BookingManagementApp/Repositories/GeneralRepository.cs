@@ -1,5 +1,6 @@
 ﻿using BookingManagementApp.Contracts;
 using BookingManagementApp.Data;
+using BookingManagementApp.Utilities.Handlers;
 using BookingManagementApp.Models;
 using Microsoft.EntityFrameworkCore;
 using BookingManagementApp.Data;
@@ -9,7 +10,7 @@ namespace BookingManagementApp.Repositories
     public class GeneralRepository<TEntity> : IRepository<TEntity> where
     TEntity : class
     {
-        private readonly BookingManagementDbContext _context;
+        protected readonly BookingManagementDbContext _context;
 
         protected GeneralRepository(BookingManagementDbContext context)
         {
@@ -36,9 +37,9 @@ namespace BookingManagementApp.Repositories
                 _context.SaveChanges();
                 return entity;
             }
-            catch
+            catch (Exception ex)
             {
-                return null;
+                throw new ExceptionHandler(ex.InnerException?.Message ?? ex.Message);
             }
         }
 

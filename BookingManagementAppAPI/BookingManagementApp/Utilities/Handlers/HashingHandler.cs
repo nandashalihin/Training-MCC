@@ -1,5 +1,5 @@
 ﻿
-namespace BookingManagementApp.Handler;
+namespace BookingManagementApp.Handlers;
 public class HashingHandler
 {
     public static string GetRandomSalt()

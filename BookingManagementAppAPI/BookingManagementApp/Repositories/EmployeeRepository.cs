@@ -8,8 +8,14 @@ using System.Linq;
 
 namespace BookingManagementApp.Repositories
 {
-    public class EmployeeRepository : GeneralRepository<Employee>, IRepository<Employee>
+    public class EmployeeRepository : GeneralRepository<Employee>, IEmployeeRepository
     {
         public EmployeeRepository(BookingManagementDbContext context) : base(context) { }
+        public string GetLastNik()
+        {
+            Employee? employee = _context.Employees.OrderByDescending(e => e.Nik).FirstOrDefault();
+
+            return employee?.Nik ?? "";
+        }
     }
 }
