@@ -2,68 +2,14 @@
 using BookingManagementApp.Data;
 using BookingManagementApp.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BookingManagementApp.Repositories
 {
-    public class EmployeeRepository : IRepository<Employee>
+    public class EmployeeRepository : GeneralRepository<Employee>, IRepository<Employee>
     {
-        private readonly BookingManagementDbContext _context;
-
-        public EmployeeRepository(BookingManagementDbContext context)
-        {
-            _context = context;
-        }
-
-        public IEnumerable<Employee> GetAll()
-        {
-            return _context.Set<Employee>().ToList();
-        }
-
-        public Employee? GetByGuid(Guid guid)
-        {
-            return _context.Set<Employee>().Find(guid);
-        }
-
-        public Employee? Create(Employee employee)
-        {
-            try
-            {
-                _context.Set<Employee>().Add(employee);
-                _context.SaveChanges();
-                return employee;
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        public bool Update(Employee employee)
-        {
-            try
-            {
-                _context.Set<Employee>().Update(employee);
-                _context.SaveChanges();
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        public bool Delete(Employee employee)
-        {
-            try
-            {
-                _context.Set<Employee>().Remove(employee);
-                _context.SaveChanges();
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
+        public EmployeeRepository(BookingManagementDbContext context) : base(context) { }
     }
 }

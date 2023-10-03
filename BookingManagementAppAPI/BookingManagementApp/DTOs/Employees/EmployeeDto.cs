@@ -1,0 +1,55 @@
+﻿using BookingManagementApp.Models;
+using System;
+using System.Data;
+
+namespace BookingManagementApp.DTOs
+{
+    public class EmployeeDto
+    {
+        public Guid Guid { get; set; }
+        public char Nik { get; set; }
+        public string FirstName { get; set; }
+        public string? LastName { get; set; }
+        public DateTime BirthDate { get; set; }
+        public int Gender { get; set; }
+        public DateTime HiringDate { get; set; }
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
+
+        // DTO untuk Get Employee
+        public static implicit operator EmployeeDto(Employee employee)
+        {
+            return new EmployeeDto
+            {
+                Guid = employee.Guid,
+                Nik = employee.Nik,
+                FirstName = employee.FirstName,
+                LastName = employee.LastName,
+                BirthDate = employee.BirthDate,
+                Gender = employee.Gender,
+                HiringDate = employee.HiringDate,
+                Email = employee.Email,
+                PhoneNumber = employee.PhoneNumber,
+               
+            };
+        }
+
+        // DTO untuk Update Employee
+        public static implicit operator Employee(EmployeeDto employeeDto)
+        {
+            return new Employee
+            {
+                Guid = employeeDto.Guid,
+                Nik = employeeDto.Nik,
+                FirstName = employeeDto.FirstName,
+                LastName = employeeDto.LastName,
+                BirthDate = employeeDto.BirthDate,
+                Gender = employeeDto.Gender,
+                HiringDate = employeeDto.HiringDate,
+                Email = employeeDto.Email,
+                PhoneNumber = employeeDto.PhoneNumber,
+                ModifiedDate = DateTime.Now
+            };
+        }
+    }
+}
