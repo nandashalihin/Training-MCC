@@ -1,4 +1,5 @@
 ﻿using BookingManagementApp.Contracts;
+using BookingManagementApp.DTOs;
 using BookingManagementApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -21,13 +22,16 @@ namespace BookingManagementApp.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
+            //Mendapatkan data Employee dan disimpan pada variabel result
             var result = _employeeRepository.GetAll();
             if (!result.Any())
             {
                 return NotFound("Data Not Found");
             }
 
-            return Ok(result);
+            //mapping setiap item variabel result ke dalam object dari kelas EmployeeDto menggunakan explicit operator
+            var data = result.Select(x => (EmployeeDto)x);
+            return Ok(data);
         }
 
         [HttpGet("{guid}")]
@@ -42,16 +46,19 @@ namespace BookingManagementApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Employee employee)
+        [HttpPost]
+        public IActionResult Create(CreateEmployeeDto employeeDto)
         {
-            var result = _employeeRepository.Create(employee);
+            
+            var result = _employeeRepository.Create(employeeDto);
             if (result is null)
             {
                 return BadRequest("Failed to create data");
             }
 
-            return Ok(result);
+            return Ok((EmployeeDto)result);
         }
+
 
         [HttpDelete("{guid}")]
         public IActionResult Delete(Guid guid)

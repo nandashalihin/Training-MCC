@@ -1,6 +1,9 @@
 ﻿using BookingManagementApp.Contracts;
+using BookingManagementApp.DTOs;
 using BookingManagementApp.Models;
+using BookingManagementApp.Handler;
 using Microsoft.AspNetCore.Mvc;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,15 +45,25 @@ namespace BookingManagementApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Account account)
+        public IActionResult Create(CreateAccountDto accountDto)
         {
-            var result = _accountRepository.Create(account);
+            // Meng-hash kata sandi sebelum menyimpannya ke database.
+            string hashedPassword = HashingHandler.HashPassword(accountDto.Password);
+
+            // Mengganti kata sandi asli dengan yang di-hash sebelum menyimpannya ke DTO.
+            accountDto.Password = hashedPassword;
+
+            // Memanggil metode Create dari _accountRepository dengan parameter DTO yang sudah di-hash.
+            var result = _accountRepository.Create(accountDto);
+
+            // Memeriksa apakah penciptaan data berhasil atau gagal.
             if (result is null)
             {
                 return BadRequest("Failed to create data");
             }
 
-            return Ok(result);
+            // Mengembalikan data yang berhasil dibuat dalam respons OK.
+            return Ok((AccountDto)result);
         }
 
         [HttpDelete("{guid}")]

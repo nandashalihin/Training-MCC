@@ -1,4 +1,5 @@
 ﻿using BookingManagementApp.Contracts;
+using BookingManagementApp.DTOs;
 using BookingManagementApp.Models;
 using BookingManagementApp.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -25,8 +26,8 @@ namespace BookingManagementApp.Controllers
             {
                 return NotFound("Data Not Found");
             }
-
-            return Ok(result);
+            var data = result.Select(x => (UniversityDto)x);
+            return Ok(data);
         }
 
         [HttpGet("{guid}")]
@@ -37,19 +38,19 @@ namespace BookingManagementApp.Controllers
             {
                 return NotFound("Id Not Found");
             }
-            return Ok(result);
+            return Ok((UniversityDto)result);
         }
 
         [HttpPost]
-        public IActionResult Create(University university)
+        public IActionResult Create(CreateUniversityDto universityDto)
         {
-            var result = _universityRepository.Create(university);
+            var result = _universityRepository.Create(universityDto);
             if (result is null)
             {
                 return BadRequest("Failed to create data");
             }
 
-            return Ok(result);
+            return Ok((UniversityDto)result);
         }
         [HttpDelete("{guid}")]
         public IActionResult Delete(Guid guid)

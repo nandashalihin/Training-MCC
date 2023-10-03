@@ -5,7 +5,7 @@ namespace BookingManagementApp.Models
     [Table(name: "tb_m_accounts")]
     public class Account : BaseEntity
     {
-        [Column(name: "password", TypeName ="nvarchar")]
+        [Column(name: "password", TypeName ="nvarchar(max)")]
         public string Password { get; set; }
 
         [Column(name: "is_deleted")]

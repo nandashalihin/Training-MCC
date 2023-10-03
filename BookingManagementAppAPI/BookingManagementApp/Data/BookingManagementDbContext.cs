@@ -22,52 +22,61 @@ namespace BookingManagementApp.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Employee>().HasIndex(e => new {
+            /*Uniqe Tidak bisa ditambahkan scr langsung pada annotation
+             *Harus ditambahkan pada override method OnModelCreating
+             */
+            modelBuilder.Entity<Employee>().HasIndex(e => new
+            {
                 e.Nik,
                 e.Email,
                 e.PhoneNumber
             }).IsUnique();
 
-            // One University has many Educations
+            // One University has many educations
             modelBuilder.Entity<University>()
-                        .HasMany(e => e.Educations)
-                        .WithOne(u => u.University)
-                        .HasForeignKey(e => e.UniversityGuid)
-                        .OnDelete(DeleteBehavior.Restrict);
+                .HasMany(e => e.Educations)
+                .WithOne(u => u.University)
+                .HasForeignKey(e => e.UniversityGuid);
 
+            //One education has one employee
             modelBuilder.Entity<Education>()
-                    .HasOne(e => e.Employee)
-                    .WithOne(e => e.Education)
-                    .HasForeignKey<Education>(e => e.Guid);
+                .HasOne(em => em.Employee)
+                .WithOne(ed => ed.Education)
+                .HasForeignKey<Education>(em => em.Guid);
+
+            //One Account has one Employee
+            modelBuilder.Entity<Account>()
+                .HasOne(a => a.Employee)
+                .WithOne(e => e.Account)
+                .HasForeignKey<Account>(a => a.Guid);
+
+            //One Account Roles has many roles
+            modelBuilder.Entity<AccountRole>()
+                .HasOne(a => a.Account)
+                .WithMany(a => a.AccountRoles)
+                .HasForeignKey(a => a.AccountGuid);
+
+            //One Role Has Many 
+            modelBuilder.Entity<Role>()
+                .HasMany(r => r.AccountRoles)
+                .WithOne(a => a.Role)
+                .HasForeignKey(r => r.RoleGuid);
 
             modelBuilder.Entity<Employee>()
-                    .HasOne(e => e.Account)
-                    .WithOne(e => e.Employee)
-                    .HasForeignKey<Employee>(e => e.Guid);
-
-            modelBuilder.Entity<Employee>()
-                       .HasMany(e => e.Bookings)
-                       .WithOne(u => u.Employee)
-                       .HasForeignKey(e => e.EmployeeGuid)
-                       .OnDelete(DeleteBehavior.Restrict);
+                .HasMany(e => e.Bookings)
+                .WithOne(b => b.Employee)
+                .HasForeignKey(b => b.EmployeeGuid);
 
             modelBuilder.Entity<Room>()
-                       .HasMany(e => e.Bookings)
-                       .WithOne(u => u.Room)
-                       .HasForeignKey(e => e.RoomGuid)
-                       .OnDelete(DeleteBehavior.Restrict);
+                .HasMany(r => r.Bookings)
+                .WithOne(b => b.Room)
+                .HasForeignKey(b => b.RoomGuid);
+        }
 
-            modelBuilder.Entity<Account>()
-                       .HasMany(e => e.AccountRoles)
-                       .WithOne(u => u.Account)
-                       .HasForeignKey(e => e.AccountGuid)
-                       .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<Role>()
-                      .HasMany(e => e.AccountRoles)
-                      .WithOne(u => u.Role)
-                      .HasForeignKey(e => e.RoleGuid)
-                      .OnDelete(DeleteBehavior.Restrict);
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.EnableSensitiveDataLogging();
+            // konfigurasi koneksi database lainnya
         }
     }
 }

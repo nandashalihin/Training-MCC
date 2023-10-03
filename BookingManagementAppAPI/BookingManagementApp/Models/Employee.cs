@@ -6,7 +6,7 @@ namespace BookingManagementApp.Models
     public class Employee : BaseEntity
     {
         [Column(name: "nik")]
-        public char Nik { get; set; }
+        public string Nik { get; set; }
 
         [Column(name: "first_name", TypeName = "nvarchar(100)")]
         public string FirstName { get; set; }
