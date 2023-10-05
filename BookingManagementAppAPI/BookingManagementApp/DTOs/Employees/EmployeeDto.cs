@@ -1,4 +1,5 @@
 ﻿using BookingManagementApp.Models;
+using BookingManagementApp.Utilities.Handlers.Enums;
 using System;
 using System.Data;
 
@@ -11,13 +12,13 @@ namespace BookingManagementApp.DTOs
         public string FirstName { get; set; }
         public string? LastName { get; set; }
         public DateTime BirthDate { get; set; }
-        public int Gender { get; set; }
+        public GenderLevel Gender { get; set; }
         public DateTime HiringDate { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
 
         // DTO untuk Get Employee
-        public static implicit operator EmployeeDto(Employee employee)
+        public static explicit operator EmployeeDto(Employee employee)
         {
             return new()
             {

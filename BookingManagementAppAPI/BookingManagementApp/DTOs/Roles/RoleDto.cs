@@ -8,7 +8,7 @@ namespace BookingManagementApp.DTOs
         public string Name { get; set; }
 
         // DTO untuk Get Role
-        public static implicit operator RoleDto(Role role)
+        public static explicit operator RoleDto(Role role)
         {
             return new RoleDto
             {

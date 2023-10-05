@@ -10,7 +10,7 @@ namespace BookingManagementApp.DTOs
         public Guid RoleGuid { get; set; }
 
         // DTO untuk Get AccountRole
-        public static implicit operator AccountRoleDto(AccountRole accountRole)
+        public static explicit operator AccountRoleDto(AccountRole accountRole)
         {
             return new AccountRoleDto
             {   

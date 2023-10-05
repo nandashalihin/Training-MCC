@@ -9,7 +9,7 @@ namespace BookingManagementApp.DTOs
         public string Name { get; set; }
 
         //DTO untuk get University
-        public static implicit operator UniversityDto(University university)
+        public static explicit operator UniversityDto(University university)
         {
             return new UniversityDto
             {

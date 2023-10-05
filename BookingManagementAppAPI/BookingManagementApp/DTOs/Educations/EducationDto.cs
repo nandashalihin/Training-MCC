@@ -11,7 +11,7 @@ namespace BookingManagementApp.DTOs
         public Guid UniversityGuid { get; set; }
 
         // DTO untuk Get Education
-        public static implicit operator EducationDto(Education education)
+        public static explicit operator EducationDto(Education education)
         {
             return new EducationDto
             {

@@ -1,4 +1,5 @@
-﻿using BookingManagementApp.Models;
+﻿using API.Utilities.Enums;
+using BookingManagementApp.Models;
 using System;
 
 namespace BookingManagementApp.DTOs
@@ -8,13 +9,13 @@ namespace BookingManagementApp.DTOs
         public Guid Guid { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public int Status { get; set; }
+        public StatusLevel Status { get; set; }
         public string Remarks { get; set; }
         public Guid RoomGuid { get; set; }
         public Guid EmployeeGuid { get; set; }
 
         // DTO untuk Get Booking
-        public static implicit operator BookingDto(Booking booking)
+        public static explicit operator BookingDto(Booking booking)
         {
             return new BookingDto
             {   

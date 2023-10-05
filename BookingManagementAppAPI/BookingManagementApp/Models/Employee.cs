@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using BookingManagementApp.Utilities.Handlers.Enums;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BookingManagementApp.Models
 {
@@ -18,7 +19,7 @@ namespace BookingManagementApp.Models
         public DateTime BirthDate { get; set; }
 
         [Column(name: "gender")]
-        public int Gender { get; set; }
+        public GenderLevel Gender { get; set; }
 
         [Column(name: "hiring_date")]
         public DateTime HiringDate { get; set; }

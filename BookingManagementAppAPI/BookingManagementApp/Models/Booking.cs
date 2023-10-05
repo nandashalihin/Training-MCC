@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using API.Utilities.Enums;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BookingManagementApp.Models
 {
@@ -12,7 +13,7 @@ namespace BookingManagementApp.Models
         public DateTime EndDate { get; set; }
 
         [Column(name: "status")]
-        public int Status { get; set; }
+        public StatusLevel Status { get; set; }
 
         [Column(name: "remarks",TypeName ="nvarchar")]
         public string Remarks { get; set; }

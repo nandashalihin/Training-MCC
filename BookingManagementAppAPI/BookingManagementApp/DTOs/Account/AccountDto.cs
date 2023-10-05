@@ -1,5 +1,6 @@
 ﻿using BookingManagementApp.Models;
 using System;
+using System.Security.Principal;
 
 namespace BookingManagementApp.DTOs
 {
@@ -13,7 +14,7 @@ namespace BookingManagementApp.DTOs
         public DateTime ExpiredTime { get; set; }
 
         // DTO untuk Get Account
-        public static implicit operator AccountDto(Account account)
+        public static explicit operator AccountDto(Account account)
         {
             return new AccountDto
             {
@@ -31,6 +32,7 @@ namespace BookingManagementApp.DTOs
         {
             return new Account
             {
+                Guid = accountDto.Guid,
                 Password = accountDto.Password,
                 IsDeleted = accountDto.IsDeleted,
                 Otp = accountDto.Otp,

@@ -25,12 +25,16 @@ namespace BookingManagementApp.Data
             /*Uniqe Tidak bisa ditambahkan scr langsung pada annotation
              *Harus ditambahkan pada override method OnModelCreating
              */
-            modelBuilder.Entity<Employee>().HasIndex(e => new
-            {
-                e.Nik,
-                e.Email,
-                e.PhoneNumber
-            }).IsUnique();
+            /* modelBuilder.Entity<Employee>().HasIndex(e => new
+             {
+                 e.Nik,
+                 e.Email,
+                 e.PhoneNumber
+             }).IsUnique();*/
+
+            modelBuilder.Entity<Employee>().HasIndex(e => e.Nik).IsUnique();
+            modelBuilder.Entity<Employee>().HasIndex(e =>  e.Email).IsUnique();
+            modelBuilder.Entity<Employee>().HasIndex(e => e.PhoneNumber).IsUnique();
 
             // One University has many educations
             modelBuilder.Entity<University>()

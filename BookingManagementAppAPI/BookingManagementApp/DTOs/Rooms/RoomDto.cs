@@ -10,7 +10,7 @@ namespace BookingManagementApp.DTOs
         public int Capacity { get; set; }
 
         // DTO untuk Get Room
-        public static implicit operator RoomDto(Room room)
+        public static explicit operator RoomDto(Room room)
         {
             return new RoomDto
             {

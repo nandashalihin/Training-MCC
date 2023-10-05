@@ -75,7 +75,7 @@ namespace BookingManagementApp.Controllers
 
                 // Menghasilkan Nomor Induk Karyawan (NIK) baru dan mengisi NIK dalam objek Employee
                 toCreate.Nik = GenerateHandler.GenerateNik(_employeeRepository.GetLastNik());
-                toCreate.Nik = null; // Perlu ditinjau ulang, mengapa NIK di-set menjadi null?
+                
 
                 // Menyimpan objek Employee yang baru dibuat ke dalam repository
                 var result = _employeeRepository.Create(toCreate);
