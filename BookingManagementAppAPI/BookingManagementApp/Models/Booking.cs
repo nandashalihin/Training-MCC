@@ -15,7 +15,7 @@ namespace BookingManagementApp.Models
         [Column(name: "status")]
         public StatusLevel Status { get; set; }
 
-        [Column(name: "remarks",TypeName ="nvarchar")]
+        [Column(name: "remarks",TypeName ="nvarchar(100)")]
         public string Remarks { get; set; }
 
         [Column(name: "room_guid")]

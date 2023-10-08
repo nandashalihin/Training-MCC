@@ -13,11 +13,12 @@ namespace BookingManagementApp.Controllers
     [Route("api/[controller]")]
     public class RoomController : ControllerBase
     {
-        private readonly IRepository<Room> _roomRepository;
-
-        public RoomController(IRepository<Room> roomRepository)
+        private readonly IRoomRepository _roomRepository;
+        private readonly IEmployeeRepository _employeeRepository;
+        public RoomController(IRoomRepository roomRepository, IEmployeeRepository employeeRepository)
         {
             _roomRepository = roomRepository;
+            _employeeRepository = employeeRepository;
         }
 
         [HttpGet]

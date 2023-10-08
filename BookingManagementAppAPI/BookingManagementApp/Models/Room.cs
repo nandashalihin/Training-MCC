@@ -5,7 +5,7 @@ namespace BookingManagementApp.Models
     [Table(name: "tb_m_rooms")]
     public class Room : BaseEntity
     {
-        [Column(name: "room_name", TypeName ="nvarchar100")]
+        [Column(name: "room_name", TypeName ="nvarchar(100)")]
         public string Name { get; set; }
 
         [Column(name: "room_floor")]

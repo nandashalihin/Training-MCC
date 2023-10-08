@@ -5,10 +5,10 @@ namespace BookingManagementApp.Models
     [Table(name: "tb_m_educations")]
     public class Education : BaseEntity
     {
-        [Column(name: "major", TypeName = "nvarchar100")]
+        [Column(name: "major", TypeName = "nvarchar(100)")]
         public string Major { get; set; }
 
-        [Column(name: "degree", TypeName = "nvarchar100")]
+        [Column(name: "degree", TypeName = "nvarchar(100)")]
         public string Degree { get; set; }
 
         [Column(name: "gpa")]
