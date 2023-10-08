@@ -1,15 +1,21 @@
 ﻿using BookingManagementApp.Contracts;
 using BookingManagementApp.Data;
 using BookingManagementApp.Models;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+
 
 namespace BookingManagementApp.Repositories
 {
-    public class AccountRepository : GeneralRepository<Account>, IRepository<Account>
+    public class AccountRepository : GeneralRepository<Account>, IAccountRepository
     {
         public AccountRepository(BookingManagementDbContext context) : base(context) { }
+
+        public string? GetPasswordByGuid(Guid guid)
+        {
+            return _context.Accounts.Where(e => e.Guid == guid)
+                .Select(e => e.Password).FirstOrDefault();
+
+        }
+
+       
     }
 }

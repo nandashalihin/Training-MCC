@@ -15,9 +15,9 @@ namespace BookingManagementApp.Controllers
     [Route("api/[controller]")]
     public class BookingController : ControllerBase
     {
-        private readonly IRepository<Booking> _bookingRepository;
+        private readonly IBookingRepository _bookingRepository;
 
-        public BookingController(IRepository<Booking> bookingRepository)
+        public BookingController(IBookingRepository bookingRepository)
         {
             _bookingRepository = bookingRepository;
         }
@@ -209,5 +209,6 @@ namespace BookingManagementApp.Controllers
                 });
             }
         }
+
     }
 }

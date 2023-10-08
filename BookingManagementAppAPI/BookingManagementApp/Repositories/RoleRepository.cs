@@ -5,8 +5,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BookingManagementApp.Repositories
 {
-    public class RoleRepository : GeneralRepository<Role>, IRepository<Role>
+    public class RoleRepository : GeneralRepository<Role>, IRoleRepository
     {
         public RoleRepository(BookingManagementDbContext context) : base(context) { }
+
+        public Guid? GetDefaultRoleGuid()
+        {
+            return _context.Set<Role>().FirstOrDefault(r => r.Name == "user")?.Guid;
+        }
     }
 }

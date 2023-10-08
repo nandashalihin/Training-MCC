@@ -9,11 +9,11 @@ namespace BookingManagementApp.Utilities.Handlers
         public string Message { get; set; }
         public TEntity? Data { get; set; }
 
-        public ResponseOKHandler(TEntity? data)
+        public ResponseOKHandler(TEntity? data, string? message = null)
         {
             Code = StatusCodes.Status200OK;
             Status = HttpStatusCode.OK.ToString();
-            Message = "Success to Retrieve Data";
+            Message = message ?? "Success to Retrieve Data";
             Data = data;
         }
 

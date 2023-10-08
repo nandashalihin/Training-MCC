@@ -3,6 +3,7 @@ using BookingManagementApp.DTOs;
 using BookingManagementApp.Models;
 using BookingManagementApp.Repositories;
 using BookingManagementApp.Utilities.Handlers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Net;
@@ -12,11 +13,12 @@ namespace BookingManagementApp.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class UniversityController : ControllerBase
     {
-        private readonly IRepository<University> _universityRepository;
+        private readonly IUniversityRepository _universityRepository;
 
-        public UniversityController(IRepository<University> universityRepository)
+        public UniversityController(IUniversityRepository universityRepository)
         {
             _universityRepository = universityRepository;
         }

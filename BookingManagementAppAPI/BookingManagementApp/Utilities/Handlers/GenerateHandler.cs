@@ -16,5 +16,12 @@
             //mengembalikan nilai berupa NIK yang dikonversi ke string
             return nik.ToString();
         }
+
+        public static int GenerateRandomOTP()
+        {
+            Random random = new Random();
+            int otpValue = random.Next(100000, 999999); // Menghasilkan angka acak enam digit
+            return otpValue;
+        }
     }
 }

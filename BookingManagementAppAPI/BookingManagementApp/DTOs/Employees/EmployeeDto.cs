@@ -17,7 +17,6 @@ namespace BookingManagementApp.DTOs
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
 
-        // DTO untuk Get Employee
         public static explicit operator EmployeeDto(Employee employee)
         {
             return new()

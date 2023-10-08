@@ -4,6 +4,7 @@ namespace BookingManagementApp.DTOs
 {
     public class CreateEducationDto
     {
+        public Guid Guid { get; set; }
         public string Major { get; set; }
         public string Degree { get; set; }
         public float Gpa { get; set; }
@@ -14,6 +15,7 @@ namespace BookingManagementApp.DTOs
         {
             return new Education
             {
+                Guid = createEducationDto.Guid,
                 Major = createEducationDto.Major,
                 Degree = createEducationDto.Degree,
                 Gpa = createEducationDto.Gpa,

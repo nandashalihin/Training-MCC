@@ -8,5 +8,6 @@ namespace BookingManagementApp.Contracts
         // Mendefinisikan metode 'GetLastNik' yang akan diimplementasikan oleh kelas lain yang mengimplementasikan interface ini.
         // Metode ini mengembalikan string dan tidak memiliki parameter.
         string? GetLastNik();
+        Employee GetGuidByEmail(string email);
     }
 }

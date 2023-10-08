@@ -36,8 +36,8 @@ namespace BookingManagementApp.Utilities.Validations.Account
                 .MinimumLength(8).WithMessage("Password harus memiliki setidaknya 8 karakter.") // Minimal 8 karakter
                 .Matches("[A-Z]").WithMessage("Password harus mengandung setidaknya satu huruf besar.") // Harus mengandung huruf besar
                 .Matches("[a-z]").WithMessage("Password harus mengandung setidaknya satu huruf kecil.") // Harus mengandung huruf kecil
-                .Matches("[0-9]").WithMessage("Password harus mengandung setidaknya satu angka.") // Harus mengandung angka
-                .Matches("[!@#$%^&*]").WithMessage("Password harus mengandung setidaknya satu karakter khusus."); // Harus mengandung karakter khusus
+                .Matches("[0-9]").WithMessage("Password harus mengandung setidaknya satu angka."); // Harus mengandung angka
+                /*.Matches("[!@#$%^&*]").WithMessage("Password harus mengandung setidaknya satu karakter khusus."); // Harus mengandung karakter khusus*/
 
             // Aturan validasi untuk properti Guid: Tidak boleh kosong (NotEmpty)
             RuleFor(e => e.Guid)

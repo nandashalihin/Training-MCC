@@ -8,8 +8,9 @@ using System.Linq;
 
 namespace BookingManagementApp.Repositories
 {
-    public class AccountRoleRepository : GeneralRepository<AccountRole>, IRepository<AccountRole>
+    public class AccountRoleRepository : GeneralRepository<AccountRole>, IAccountRoleRepository
     {
         public AccountRoleRepository(BookingManagementDbContext context) : base(context) { }
+
     }
 }
