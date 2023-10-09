@@ -110,16 +110,23 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
        });
 
 // Add CORS
+// Ini adalah konfigurasi untuk mengaktifkan CORS (Cross-Origin Resource Sharing) di dalam aplikasi ASP.NET Core.
 builder.Services.AddCors(options =>
 {
+    // Di dalam blok ini, kita menambahkan sebuah kebijakan CORS default.
     options.AddDefaultPolicy(policy =>
     {
+        // Dalam kebijakan ini, kita mengizinkan permintaan dari semua asal (origin) yang berbeda.
         policy.AllowAnyOrigin();
+
+        // Kami juga mengizinkan permintaan dengan metode HTTP apa pun (GET, POST, PUT, dsb.).
         policy.AllowAnyMethod();
+
+        // Dan kami juga mengizinkan penggunaan semua header HTTP yang berbeda.
         policy.AllowAnyHeader();
     });
-
 });
+
 
 var app = builder.Build();
 

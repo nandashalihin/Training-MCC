@@ -488,9 +488,9 @@ namespace BookingManagementApp.Controllers
             {
                 return NotFound(new ResponseErrorHandler
                 {
-                    Code = StatusCodes.Status404NotFound, //Inisialisasi nilai atribut Code
-                    Status = HttpStatusCode.NotFound.ToString(), //Inisialisai nilai atribut Status
-                    Message = "Email was not registered" //Inisialisasi nilai atribut Message
+                    Code = StatusCodes.Status404NotFound, 
+                    Status = HttpStatusCode.NotFound.ToString(), 
+                    Message = "Email was not registered" 
                 });
             }
 

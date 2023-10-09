@@ -1,7 +1,8 @@
-﻿using API.Utilities.Enums;
+﻿using BookingManagementApp.Utilities.Enums;
 
 namespace BookingManagementApp.DTOs
 {
+    //DTO untuk mapping data Info Booking
     public class BookingInfoDto
     {
         public Guid BookingGuid { get; set; }

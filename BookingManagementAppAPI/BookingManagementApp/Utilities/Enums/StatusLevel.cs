@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace API.Utilities.Enums
+namespace BookingManagementApp.Utilities.Enums
 {
     
     public enum StatusLevel

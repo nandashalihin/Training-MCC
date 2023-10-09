@@ -1,5 +1,6 @@
 ﻿namespace BookingManagementApp.DTOs
 {
+    //DTO Untuk Mapping data Available Room
     public class AvailableRoomDto
     {
         public Guid RoomGuid { get; set; }
