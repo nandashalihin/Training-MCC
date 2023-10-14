@@ -1,0 +1,387 @@
+﻿html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+#pokemonImage {
+    width: 200px;
+}
+.badge {
+    font-size: 1.5rem; /* Sesuaikan ukuran font sesuai kebutuhan */
+    margin-right: 0.5rem; /* Jarak antara badge */
+}
+.progress-bar-attack {
+    background-color: #FF5733; /* Warna HP */
+}
+
+.progress-bar-hp {
+    background-color: #16C172; /* Warna Attack */
+}
+
+.progress-bar-defense {
+    background-color: #91A6FF; /* Warna Defense */
+}
+
+.progress-bar-special-attack {
+    background-color: #FCD0A1; /* Warna Defense */
+}
+
+.progress-bar-special-defense {
+    background-color: #C2CDFF; /* Warna Defense */
+}
+
+.progress-bar-speed {
+    background-color: #F0CF65; /* Warna Defense */
+}
+
+.carousel {
+    background-color: #AECFDF; /* Warna Defense */
+}
+
+
+
+div.dt-button-collection-title {
+    text-align: center;
+    padding: .3em 0 .5em;
+    margin-left: .5em;
+    margin-right: .5em;
+    font-size: .9em
+}
+
+    div.dt-button-collection-title:empty {
+        display: none
+    }
+
+span.dt-button-spacer {
+    display: inline-block;
+    margin: .5em;
+    white-space: nowrap
+}
+
+    span.dt-button-spacer.bar {
+        border-left: 1px solid rgba(0, 0, 0, 0.3);
+        vertical-align: middle;
+        padding-left: .5em
+    }
+
+        span.dt-button-spacer.bar:empty {
+            height: 1em;
+            width: 1px;
+            padding-left: 0
+        }
+
+div.dt-button-collection .dt-button-active {
+    padding-right: 3em
+}
+
+    div.dt-button-collection .dt-button-active:after {
+        position: absolute;
+        top: 50%;
+        margin-top: -10px;
+        right: 1em;
+        display: inline-block;
+        content: "✓";
+        color: inherit
+    }
+
+    div.dt-button-collection .dt-button-active.dt-button-split {
+        padding-right: 0
+    }
+
+        div.dt-button-collection .dt-button-active.dt-button-split:after {
+            display: none
+        }
+
+        div.dt-button-collection .dt-button-active.dt-button-split > *:first-child {
+            padding-right: 3em
+        }
+
+            div.dt-button-collection .dt-button-active.dt-button-split > *:first-child:after {
+                position: absolute;
+                top: 50%;
+                margin-top: -10px;
+                right: 1em;
+                display: inline-block;
+                content: "✓";
+                color: inherit
+            }
+
+div.dt-button-collection .dt-button-active-a a {
+    padding-right: 3em
+}
+
+    div.dt-button-collection .dt-button-active-a a:after {
+        position: absolute;
+        right: 1em;
+        display: inline-block;
+        content: "✓";
+        color: inherit
+    }
+
+div.dt-button-collection span.dt-button-spacer {
+    width: 100%;
+    font-size: .9em;
+    text-align: center;
+    margin: .5em 0
+}
+
+    div.dt-button-collection span.dt-button-spacer:empty {
+        height: 0;
+        width: 100%
+    }
+
+    div.dt-button-collection span.dt-button-spacer.bar {
+        border-left: none;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        padding-left: 0
+    }
+
+div.dt-button-collection {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 200px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    padding: .75em 0;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    background-color: white;
+    overflow: hidden;
+    z-index: 2002;
+    border-radius: 5px;
+    box-shadow: 3px 4px 10px 1px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box
+}
+
+    div.dt-button-collection .dt-button {
+        position: relative;
+        left: 0;
+        right: 0;
+        width: 100%;
+        display: block;
+        float: none;
+        background: none;
+        margin: 0;
+        padding: .5em 1em;
+        border: none;
+        text-align: left;
+        cursor: pointer;
+        color: inherit
+    }
+
+        div.dt-button-collection .dt-button.dt-button-active {
+            background: none;
+            box-shadow: none
+        }
+
+        div.dt-button-collection .dt-button.disabled {
+            cursor: default;
+            opacity: .4
+        }
+
+        div.dt-button-collection .dt-button:hover:not(.disabled) {
+            border: none;
+            background: rgba(153, 153, 153, 0.1);
+            box-shadow: none
+        }
+
+    div.dt-button-collection div.dt-button-split {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-content: flex-start;
+        align-items: stretch
+    }
+
+        div.dt-button-collection div.dt-button-split button.dt-button {
+            margin: 0;
+            display: inline-block;
+            width: 0;
+            flex-grow: 1;
+            flex-shrink: 0;
+            flex-basis: 50px
+        }
+
+        div.dt-button-collection div.dt-button-split button.dt-button-split-drop {
+            min-width: 33px;
+            flex: 0
+        }
+
+    div.dt-button-collection.fixed .dt-button {
+        border-radius: .25em;
+        background: rgba(255, 255, 255, 0.1)
+    }
+
+    div.dt-button-collection.fixed {
+        position: fixed;
+        display: block;
+        top: 50%;
+        left: 50%;
+        margin-left: -75px;
+        border-radius: 5px;
+        background-color: white;
+        padding: .5em
+    }
+
+        div.dt-button-collection.fixed.two-column {
+            margin-left: -200px
+        }
+
+        div.dt-button-collection.fixed.three-column {
+            margin-left: -225px
+        }
+
+        div.dt-button-collection.fixed.four-column {
+            margin-left: -300px
+        }
+
+        div.dt-button-collection.fixed.columns {
+            margin-left: -409px
+        }
+
+@media screen and (max-width: 1024px) {
+    div.dt-button-collection.fixed.columns {
+        margin-left: -308px
+    }
+}
+
+@media screen and (max-width: 640px) {
+    div.dt-button-collection.fixed.columns {
+        margin-left: -203px
+    }
+}
+
+@media screen and (max-width: 460px) {
+    div.dt-button-collection.fixed.columns {
+        margin-left: -100px
+    }
+}
+
+div.dt-button-collection.fixed > :last-child {
+    max-height: 100vh;
+    overflow: auto
+}
+
+div.dt-button-collection.two-column > :last-child,
+div.dt-button-collection.three-column > :last-child,
+div.dt-button-collection.four-column > :last-child {
+    display: block !important;
+    -webkit-column-gap: 8px;
+    -moz-column-gap: 8px;
+    -ms-column-gap: 8px;
+    -o-column-gap: 8px;
+    column-gap: 8px
+}
+
+    div.dt-button-collection.two-column > :last-child > *,
+    div.dt-button-collection.three-column > :last-child > *,
+    div.dt-button-collection.four-column > :last-child > * {
+        -webkit-column-break-inside: avoid;
+        break-inside: avoid
+    }
+
+div.dt-button-collection.two-column {
+    width: 400px
+}
+
+    div.dt-button-collection.two-column > :last-child {
+        padding-bottom: 1px;
+        column-count: 2
+    }
+
+div.dt-button-collection.three-column {
+    width: 450px
+}
+
+    div.dt-button-collection.three-column > :last-child {
+        padding-bottom: 1px;
+        column-count: 3
+    }
+
+div.dt-button-collection.four-column {
+    width: 600px
+}
+
+    div.dt-button-collection.four-column > :last-child {
+        padding-bottom: 1px;
+        column-count: 4
+    }
+
+div.dt-button-collection .dt-button {
+    border-radius: 0
+}
+
+div.dt-button-collection.columns {
+    width: auto
+}
+
+    div.dt-button-collection.columns > :last-child {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 6px;
+        width: 818px;
+        padding-bottom: 1px
+    }
+
+        div.dt-button-collection.columns > :last-child .dt-button {
+            min-width: 200px;
+            flex: 0 1;
+            margin: 0
+        }
+
+    div.dt-button-collection.columns.dtb-b3 > :last-child,
+    div.dt-button-collection.columns.dtb-b2 > :last-child,
+    div.dt-button-collection.columns.dtb-b1 > :last-child {
+        justify-content: space-between
+    }
+
+    div.dt-button-collection.columns.dtb-b3 .dt-button {
+        flex: 1 1 32%
+    }
+
+    div.dt-button-collection.columns.dtb-b2 .dt-button {
+        flex: 1 1 48%
+    }
+
+    div.dt-button-collection.columns.dtb-b1 .dt-button {
+        flex: 1 1 100%
+    }
+
+@media screen and (max-width: 1024px) {
+    div.dt-button-collection.columns > :last-child {
+        width: 612px
+    }
+}
+
+@media screen and (max-width: 640px) {
+    div.dt-button-collection.columns > :last-child {
+        width: 406px
+    }
+
+    div.dt-button-collection.columns.dtb-b3 .dt-button {
+        flex: 0 1 32%
+    }
+}
+
+@media screen and (max-width: 460px) {
+    div.dt-button-collection.columns > :last-child {
+        width: 200px
+    }
+}

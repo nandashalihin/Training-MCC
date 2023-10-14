@@ -23,9 +23,8 @@ namespace BookingManagementApp.Utilities.Validations.Employees
             // - Tidak boleh kosong (NotEmpty)
             // - Harus lebih besar atau sama dengan tanggal 18 tahun yang lalu
             RuleFor(e => e.BirthDate)
-                .NotEmpty()
-                .GreaterThanOrEqualTo(DateTime.Now.AddYears(-18))
-                .WithMessage("Umur harus minimal 18 tahun");
+                .Must(birthDate => DateTime.Today.Year - birthDate.Year > 18)
+    .WithMessage("Umur harus lebih dari 18 tahun");
 
             // Aturan validasi untuk properti Gender:
             // - Tidak boleh null (NotNull)
