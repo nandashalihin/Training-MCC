@@ -52,6 +52,18 @@ body {
     background-color: #AECFDF; /* Warna Defense */
 }
 
+/*#createEmployee{
+    background-color :cadetblue;
+}
+
+#createEmployee:hover {
+    background-color:crimson;
+}*/
+
+.scrollable-div {
+    overflow-x: auto;
+    white-space: nowrap; /* Menjaga teks dalam satu baris */
+}
 
 
 div.dt-button-collection-title {

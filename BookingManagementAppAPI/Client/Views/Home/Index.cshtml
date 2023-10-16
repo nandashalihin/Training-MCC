@@ -88,23 +88,100 @@
         </div>
     </div>
 
+
+        <div class="modal fade" id="detailEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="detailEmployeeModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Detail Employee</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p>First Name:</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p id="detailFirstName">: </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p>Last Name:</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p id="detailLastName">: </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p>Birth Date:</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p id="detailBirthDate">: </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p>Hiring Date:</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p id="detailHiringDate">: </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p>Email:</p>
+                                </div>
+                                <div class="col-md-6 text-break">
+                                    <p id="detailEmail">: </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p>Phone Number:</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p id="detailPhoneNumber">: </p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p>Gender:</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p id="detailGender">: </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
     <!--//app-content-->
     <div class="mb-3">
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#employeeModal">Create Employee</button>
+        <button type="button" class="btn btn-primary" id="createEmployee" data-bs-toggle="modal" data-bs-target="#employeeModal">Create Employee</button>
 
     </div>
-    <div class="table-responsive bg-body-tertiary p-3 shadow rounded">
-        <table id="tablePoke" class="table table-sm table-light">
+    <div class="scrollable-div bg-body-tertiary p-3 shadow rounded">
+        <table id="tablePoke" class="table table-sm table-hover">
             <thead>
                 <tr>
-                    <th scope="col">No</th>
-                    <th scope="col">First Name</th>
-                    <th scope="col">Last Name</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Phone Number</th>
-                    <th scope="col">Birth Date</th>
-                    <th scope="col">Action</th>
+                    <th class="col" >No</th>
+                    <th class="col" >First Name</th>
+                    <th class="col" >Last Name</th>
+                    <th class="col">Nik</th>
+                    <th class="col" >Email</th>
+                    <th class="col" >Phone Number</th>
+                    <th class="col" >Birth Date</th>
+                    <th class="col text-center" >Action</th>
                 </tr>
             </thead>
             <tbody>
