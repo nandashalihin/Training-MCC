@@ -23,5 +23,10 @@ namespace BookingManagementApp.Utilities.Handlers
             Status = HttpStatusCode.OK.ToString();
             Message = message;
         }
+
+        public ResponseOKHandler()
+        {
+
+        }
     }
 }
