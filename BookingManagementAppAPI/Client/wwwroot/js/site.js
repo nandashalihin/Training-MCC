@@ -296,3 +296,25 @@ function saveEmployee() {
         });
     });
 }
+
+
+$(document).ready(function () {
+    $.ajax({
+        url: "/University/GetAllUniversity/"
+    }).done((res) => {
+        // Menginisialisasi DataTable dengan data JSON yang diterima
+        $('#universityTable').DataTable({
+            data: res,
+            columns: [
+                { data: 'code' },
+                { data: 'name' },
+                { data: 'educations' },
+                { data: 'guid' },
+                { data: 'createdDate' },
+                { data: 'modifiedDate' }
+            ]
+        });
+    }).fail((err) => {
+        console.log(err);
+    });
+});

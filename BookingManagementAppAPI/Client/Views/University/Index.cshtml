@@ -1,0 +1,81 @@
+﻿@model IEnumerable<BookingManagementApp.DTOs.UniversityDto>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+@* <head>
+    <!-- Include DataTables CSS and JavaScript -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+</head>
+<body>
+    <!-- Tambahkan tabel dengan ID sesuai -->
+    <div class="app-wrapper">
+        <div class="app-content pt-3 p-md-3 p-lg-4">
+    <table id="universityTable" class="display" style="width:100%"></table>
+    </div>
+    </div>
+    <!-- Include jQuery (pastikan Anda telah mengunduh atau memasang jQuery) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> *@
+
+
+<div class="app-wrapper">
+    <div class="app-content pt-3 p-md-3 p-lg-4">
+        <div class="scrollable-div bg-body-tertiary p-3 shadow rounded">
+            <table id="universityTable" class="display" style="width:100%"></table> 
+          </table>
+        </div>
+    </div>
+</div>
+
+
+
+@* <div class="app-wrapper">
+    <div class="app-content pt-3 p-md-3 p-lg-4">
+
+        <h1>Index</h1>
+
+        <p>
+            <a asp-action="Create">Create New</a>
+        </p>
+        <table class="table" id="university">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Guid)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Code)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Guid)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Code)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div> *@
