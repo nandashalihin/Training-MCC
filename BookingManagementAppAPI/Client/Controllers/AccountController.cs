@@ -1,17 +1,16 @@
 ﻿using BookingManagementApp.DTOs;
 using BookingManagementApp.Models;
 using Client.Contracts;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Client.Controllers;
-[Authorize]
-
-public class UniversityController : Controller
+namespace Client.Controllers
+{
+    public class AccountController : Controller
     {
-        private readonly IUniversityRepository repository;
+        private readonly IAccountRepository repository;
 
-        public UniversityController(IUniversityRepository repository)
+        public AccountController(IAccountRepository repository)
         {
             this.repository = repository;
         }
@@ -21,7 +20,29 @@ public class UniversityController : Controller
             return View();
         }
 
-        public async Task<JsonResult> GetAllUniversity()
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginDto login)
+        {
+            var result = await repository.Login(login);
+
+            if (result.Status == "OK")
+            {
+
+                HttpContext.Session.SetString("JWToken", result.Data.Token);
+                return RedirectToAction("Index", "Home");
+            }
+            return RedirectToAction("Index", "Login");
+        }
+
+        
+
+        /*public async Task<JsonResult> GetAllAccount()
         {
             var result = await repository.Get();
             return Json(result.Data);
@@ -34,9 +55,9 @@ public class UniversityController : Controller
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateUniversityDto University)
+        public async Task<IActionResult> Create(CreateAccountDto Account)
         {
-            var result = await repository.Post(University);
+            var result = await repository.Post(Account);
             Console.WriteLine(result);
             Console.WriteLine("Code " + result.Code);
             Console.WriteLine("Status " + result.Status);
@@ -53,13 +74,13 @@ public class UniversityController : Controller
         public async Task<IActionResult> Delete(Guid id)
         {
             var result = await repository.Get(id);
-            var deleteUniversity = new UniversityDto();
+            var deleteAccount = new AccountDto();
             if (result.Data != null)
             {
-                deleteUniversity =(UniversityDto)result.Data;
+                deleteAccount =(AccountDto)result.Data;
             }
            
-            return View(deleteUniversity);
+            return View(deleteAccount);
         }
 
         [HttpPost]
@@ -78,31 +99,31 @@ public class UniversityController : Controller
         public async Task<IActionResult> Details(Guid id)
         {
             var result = await repository.Get(id);
-            var detailUniversity = new UniversityDto();
+            var detailAccount = new AccountDto();
             if (result.Data != null)
             {
-                detailUniversity = (UniversityDto)result.Data;
+                detailAccount = (AccountDto)result.Data;
             }
 
-            return View(detailUniversity);
+            return View(detailAccount);
         }
 
         public async Task<IActionResult> Edit(Guid id)
         {
             var result = await repository.Get(id);
-            var editUniversity = new UniversityDto();
+            var editAccount = new AccountDto();
             if (result.Data != null)
             {
-                editUniversity = (UniversityDto)result.Data;
+                editAccount = (AccountDto)result.Data;
             }
 
-            return View(editUniversity);
+            return View(editAccount);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(UniversityDto University)
+        public async Task<IActionResult> Edit(AccountDto Account)
         {
-            var result = await repository.Put(University.Guid ,University);
+            var result = await repository.Put(Account.Guid ,Account);
             if (result.Code == 200)
             {
                 return RedirectToAction(nameof(Index));
@@ -110,8 +131,8 @@ public class UniversityController : Controller
 
             return View();
 
-        }
+        }*/
 
     }
-
+}
 

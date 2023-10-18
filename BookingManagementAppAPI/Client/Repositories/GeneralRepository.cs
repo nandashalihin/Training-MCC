@@ -8,9 +8,9 @@ namespace Client.Repositories
     public class GeneralRepository<Entity, TId> : IRepository<Entity, TId>
         where Entity : class
     {
-        private readonly string request;
+        protected readonly string request;
         private readonly HttpContextAccessor contextAccessor;
-        private HttpClient httpClient;
+        protected HttpClient httpClient;
 
         //constructor
         public GeneralRepository(string request)
@@ -29,7 +29,7 @@ namespace Client.Repositories
         {
             ResponseOKHandler<Entity> entityVM = null;
             StringContent content = new StringContent(JsonConvert.SerializeObject(id), Encoding.UTF8, "application/json");
-            using (var response = httpClient.DeleteAsync(request  + id).Result)
+            using (var response = httpClient.DeleteAsync(request + id).Result)
             {
                 string apiResponse = await response.Content.ReadAsStringAsync();
                 entityVM = JsonConvert.DeserializeObject<ResponseOKHandler<Entity>>(apiResponse);
@@ -83,5 +83,7 @@ namespace Client.Repositories
             }
             return entityVM;
         }
+
+
     }
 }
