@@ -3,7 +3,7 @@ using BookingManagementApp.Models;
 
 namespace Client.Contracts
 {
-    public interface IEmployeeRepository : IRepository<EmployeeDto, Guid>
+    public interface IEmployeeRepository : IRepository<Employee, Guid>
     {
 
 

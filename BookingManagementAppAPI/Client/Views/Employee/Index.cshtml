@@ -5,11 +5,11 @@
     Layout = "~/Views/Shared/_Admin.cshtml";
 }
 <div class="app-wrapper">
-    <div class="app-content pt-3 p-md-3 p-lg-4">
+    <div class="app-content pt-3 p-md-3 py-lg-4 px-lg-0">
         <div class="container-xl">
             <h1 class="app-page-title">Employee Dashboard</h1>
             <p>
-                <a class="btn btn-primary" asp-action="Create">Create New</a>
+                <a class="btn btn-primary" href="/Employee/Create">Create New</a>
             </p>
             <div class="scrollable-div bg-body-tertiary p-3 shadow rounded">
                 <table class="table table-sm table-hover">
@@ -77,9 +77,9 @@
                                     @Html.DisplayFor(modelItem => item.PhoneNumber)
                                 </td>
                                 <td>
-                                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                                    <a asp-action="Edit" asp-route-id="@item.Guid">Edit</a> |
+                                    <a asp-action="Details" asp-route-id="@item.Guid">Details</a> |
+                                    <a asp-action="Delete" asp-route-id="@item.Guid">Delete</a>
                                 </td>
                             </tr>
                         }
