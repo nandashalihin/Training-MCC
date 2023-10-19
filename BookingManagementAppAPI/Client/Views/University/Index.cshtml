@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Admin.cshtml";
 }
 
 
@@ -24,7 +25,17 @@
 <div class="app-wrapper">
     <div class="app-content pt-3 p-md-3 p-lg-4">
         <div class="scrollable-div bg-body-tertiary p-3 shadow rounded">
-            <table id="universityTable" class="display" style="width:100%"></table> 
+            <table id="universityTable" class="display" style="width:100%">
+            <thead>
+                <tr>
+                    <th class="col">No</th>
+                    <th class="col">Code</th>
+                    <th class="col">Name</th>
+                   
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
           </table>
         </div>
     </div>

@@ -4,6 +4,7 @@ using BookingManagementApp.DTOs.Employees;
 using BookingManagementApp.Models;
 using BookingManagementApp.Repositories;
 using BookingManagementApp.Utilities.Handlers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace BookingManagementApp.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    /*[Authorize(Roles = "manager")]*/
     public class EmployeeController : ControllerBase
     {
         private readonly IEmployeeRepository _employeeRepository;

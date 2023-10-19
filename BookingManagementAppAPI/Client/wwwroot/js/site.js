@@ -306,12 +306,15 @@ $(document).ready(function () {
         $('#universityTable').DataTable({
             data: res,
             columns: [
+                {
+                    "data": "id",
+                    render: function (data, type, row, meta) {
+                        return meta.row + meta.settings._iDisplayStart + 1;
+                    }
+                },
                 { data: 'code' },
                 { data: 'name' },
-                { data: 'educations' },
-                { data: 'guid' },
-                { data: 'createdDate' },
-                { data: 'modifiedDate' }
+                
             ]
         });
     }).fail((err) => {

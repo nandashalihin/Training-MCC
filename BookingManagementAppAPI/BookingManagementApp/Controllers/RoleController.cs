@@ -13,9 +13,9 @@ namespace BookingManagementApp.Controllers
     [Route("api/[controller]")]
     public class RoleController : ControllerBase
     {
-        private readonly IRepository<Role> _roleRepository;
+        private readonly IRoleRepository _roleRepository;
 
-        public RoleController(IRepository<Role> roleRepository)
+        public RoleController(IRoleRepository roleRepository)
         {
             _roleRepository = roleRepository;
         }

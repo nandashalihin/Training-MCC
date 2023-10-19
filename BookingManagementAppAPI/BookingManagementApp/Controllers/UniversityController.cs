@@ -13,7 +13,7 @@ namespace BookingManagementApp.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-
+    [Authorize(Roles = "manager")]
     public class UniversityController : ControllerBase
     {
         private readonly IUniversityRepository _universityRepository;

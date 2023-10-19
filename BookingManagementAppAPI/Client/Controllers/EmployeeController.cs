@@ -1,11 +1,12 @@
 ﻿using BookingManagementApp.DTOs;
 using BookingManagementApp.Models;
 using Client.Contracts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Client.Controllers
-{
-    public class EmployeeController : Controller
+namespace Client.Controllers;
+/*[Authorize(Roles = "manager")]*/
+public class EmployeeController : Controller
     {
         private readonly IEmployeeRepository repository;
 
@@ -111,5 +112,5 @@ namespace Client.Controllers
         }
 
     }
-}
+
 

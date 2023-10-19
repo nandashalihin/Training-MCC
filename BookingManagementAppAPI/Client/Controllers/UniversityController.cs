@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Client.Controllers;
-[Authorize]
+[Authorize(Roles = "manager")]
 
 public class UniversityController : Controller
     {

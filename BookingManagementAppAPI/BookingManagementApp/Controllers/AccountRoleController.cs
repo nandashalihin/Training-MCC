@@ -15,9 +15,9 @@ namespace BookingManagementApp.Controllers
     [Route("api/[controller]")]
     public class AccountRoleController : ControllerBase
     {
-        private readonly IRepository<AccountRole> _accountRoleRepository;
+        private readonly IAccountRoleRepository _accountRoleRepository;
 
-        public AccountRoleController(IRepository<AccountRole> accountRoleRepository)
+        public AccountRoleController(IAccountRoleRepository accountRoleRepository)
         {
             _accountRoleRepository = accountRoleRepository;
         }
